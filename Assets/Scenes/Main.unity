@@ -245,8 +245,9 @@ GameObject:
   - component: {fileID: 1137183012}
   - component: {fileID: 1137183011}
   - component: {fileID: 1137183010}
-  - component: {fileID: 1137183014}
   - component: {fileID: 1137183015}
+  - component: {fileID: 1137183014}
+  - component: {fileID: 1137183016}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -341,7 +342,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 2
+  rb: {fileID: 1137183015}
   cameraNormal: 0
+  canMove: 1
 --- !u!54 &1137183015
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -358,6 +361,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &1137183016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137183009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75a5f25eb7a8ec1489e42b4299635c3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovementController: {fileID: 1137183014}
+  isShadowHideActive: 1
+  hidingDuration: 3
 --- !u!1 &1140116552
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] float Speed;
 	Vector3 moveVector;
-    Rigidbody rb;
+    [SerializeField] Rigidbody rb;
 
 	/// Hareketi kameraya göre yapmak için
 	public int cameraNormal;
@@ -14,11 +14,8 @@ public class PlayerMovementController : MonoBehaviour
 	string moveHString,moveVString;
 	int moveHSign,moveVSign;
 	///
+	public bool canMove;
 
-    void Start () 
-    {
-		rb = GetComponent<Rigidbody>();
-	}
     void Update () 
     {
 		Movement();
@@ -63,6 +60,9 @@ public class PlayerMovementController : MonoBehaviour
 	}
 	void Movement()
 	{
+		if(!canMove)
+			return;
+
 		moveH = Input.GetAxisRaw(moveHString) * moveHSign;
 		moveV = Input.GetAxisRaw(moveVString) * moveVSign;
 		moveVector = new Vector3(moveH,0,moveV);
