@@ -8,30 +8,65 @@ public class EnemyRoamingController : MonoBehaviour
     [SerializeField]Transform[] roamingPoints;
     [SerializeField] NavMeshAgent navAgent;
     [SerializeField]int currentRoamingPoint = 0;
-    bool walking;
-
+    bool isArrived,isDestineted;
+    [SerializeField] float reachedDistance,waitTimeWhenReachedToPoint;
     void Start()
     {
-        walking = true;
+        Roam();
     }
+
     void Update()
     {
-        while(walking == true)
+        IsPointReached();
+    }
+    
+    void IsPointReached()
+    {
+        //Eğer aradaki mesafe ulaşma mesafesinden küçükse  
+        if(Vector3.Distance(transform.position,roamingPoints[currentRoamingPoint].position) <= reachedDistance  && isArrived == false)
         {
-            Roam();
+            Debug.Log("reached");
+            isArrived = true;
+            //Ajan durdu
+            navAgent.isStopped = true;
+            DestinateToNextPoint();
+            StartCoroutine( WaitWhenPointReached() );
         }
     }
-    void RoamToNextPoint()
+    void DestinateToNextPoint()
     {
         currentRoamingPoint++;
+        
         if(currentRoamingPoint >= roamingPoints.Length)
         {
             currentRoamingPoint = 0;
         }
+        
+        navAgent.destination = roamingPoints[currentRoamingPoint].position;
+        isDestineted = true;
     }
+    //Eğer bi nokta atanmamışsa ata ve git 
+    //atanmışsa direk git
     void Roam()
     {
-        navAgent.destination = roamingPoints[currentRoamingPoint].position;
-        navAgent.isStopped = false;
+        Debug.Log("Roaming");
+        isArrived = false;
+        if(isDestineted == false)
+        {
+            navAgent.destination = roamingPoints[currentRoamingPoint].position;
+            isDestineted = true;
+            navAgent.isStopped = false;
+        }
+        else
+        {
+            navAgent.isStopped = false;
+        }
+    }
+    IEnumerator WaitWhenPointReached()
+    {
+        Debug.Log("Waiting S");
+        yield return new WaitForSeconds(waitTimeWhenReachedToPoint);
+        Debug.Log("Waiting E");
+        Roam();
     }
 }
