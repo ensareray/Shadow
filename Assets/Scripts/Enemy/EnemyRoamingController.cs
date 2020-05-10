@@ -28,7 +28,6 @@ public class EnemyRoamingController : MonoBehaviour
         //Eğer aradaki mesafe ulaşma mesafesinden küçükse  
         if(Vector3.Distance(transform.position,roamingPoints[currentRoamingPoint].position) <= reachedDistance  && isArrived == false)
         {
-            Debug.Log("reached");
             isArrived = true;
             //Ajan durdu
             navAgent.isStopped = true;

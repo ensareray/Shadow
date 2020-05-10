@@ -16,7 +16,6 @@ public class CameraMovementSencronyzer : MonoBehaviour
     void DetectCameraNormal()
     {
         float y = Mathf.Abs(transform.rotation.eulerAngles.y);
-        Debug.Log(y);
         if( y >= 315 && y < 45 )
         {
             playerMovementController.cameraNormal = 0;

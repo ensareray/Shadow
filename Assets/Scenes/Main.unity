@@ -445,8 +445,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6798a6a8fa3892e4e9094b86fff06a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightDist: 10
+  sightDist: 8
   hightMultiplier: 0.3
+  waitingTimeWhenContact: 1.5
+  roamingController: {fileID: 799198515}
 --- !u!1 &1021480865
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,13 +9,14 @@ public class EnemyPlayerDetectController : MonoBehaviour
 {
     Transform target;
     bool isDetected;
-    [SerializeField]float sightDist, hightMultiplier;
-    
+    [SerializeField] float sightDist, hightMultiplier, waitingTimeWhenContact;
+    [SerializeField] EnemyRoamingController roamingController;
+
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform; 
+        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    
+
     void Update()
     {
         SearchPlayer();
@@ -23,42 +24,53 @@ public class EnemyPlayerDetectController : MonoBehaviour
     void SearchPlayer()
     {
         Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, transform.forward * sightDist, Color.green);
-        Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward + transform.right ).normalized * sightDist, Color.green);
-        Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward - transform.right ).normalized * sightDist, Color.green);
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position + Vector3.up * hightMultiplier, transform.forward, out hit, sightDist ))
+        Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward + transform.right).normalized * sightDist, Color.green);
+        Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward - transform.right).normalized * sightDist, Color.green);
+        if( isDetected == false )
         {
-            if(hit.transform.CompareTag("Player"))
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position + Vector3.up * hightMultiplier, transform.forward, out hit, sightDist))
             {
-                Debug.Log("Player detected");
+                if (hit.transform.CompareTag("Player"))
+                {
+                    Debug.Log("Player detected");
+                    ISawPlayer();
+                }
             }
-        }
-        if(Physics.Raycast(transform.position + Vector3.up * hightMultiplier, (transform.forward + transform.right ).normalized, out hit, sightDist ))
-        {
-            if(hit.transform.CompareTag("Player"))
+            if (Physics.Raycast(transform.position + Vector3.up * hightMultiplier, (transform.forward + transform.right).normalized, out hit, sightDist))
             {
-                Debug.Log("Player detected");
+                if (hit.transform.CompareTag("Player"))
+                {
+                    Debug.Log("Player detected");
+                    ISawPlayer();
+                }
             }
-        }
-        if(Physics.Raycast(transform.position + Vector3.up * hightMultiplier, (transform.forward - transform.right ).normalized, out hit, sightDist ))
-        {
-            if(hit.transform.CompareTag("Player"))
+            if (Physics.Raycast(transform.position + Vector3.up * hightMultiplier, (transform.forward - transform.right).normalized, out hit, sightDist))
             {
-                Debug.Log("Player detected");
+                if (hit.transform.CompareTag("Player"))
+                {
+                    Debug.Log("Player detected");
+                    ISawPlayer();
+                }
             }
         }
     }
-     void OnDrawGizmos()
+    void ISawPlayer()
     {
-        /* Gizmos.DrawLine( transform.position 
-            ,new Vector3(transform.position.x,transform.position.y,transform.position.z + sightConstraints.z) );
-
-        Gizmos.DrawLine( new Vector3(transform.position.x - sightConstraints.x,transform.position.y,transform.position.z) 
-            ,new Vector3(transform.position.x + sightConstraints.x,transform.position.y,transform.position.z) );
-
-        Gizmos.DrawLine( new Vector3(transform.position.x ,transform.position.y -sightConstraints.y,transform.position.z) 
-            ,new Vector3(transform.position.x ,transform.position.y+sightConstraints.y,transform.position.z) ); */
-		//Gizmos.DrawLine(transform.position,target.position);
-    } 
-
+        isDetected = true;
+        //Dur
+        roamingController.EnemyStop();
+        //Oyuncuyu uyar
+        //yarım saniye bekle
+        StartCoroutine(WaitWhenYouSee());
+    }
+    IEnumerator WaitWhenYouSee()
+    {
+        yield return new WaitForSeconds(waitingTimeWhenContact);
+        //oyuncuya bak ve fenerini ona tut
+        transform.LookAt(target);
+        yield return new WaitForSeconds(waitingTimeWhenContact);
+        roamingController.EnemyResume();
+        isDetected = false;
+    }
 }
