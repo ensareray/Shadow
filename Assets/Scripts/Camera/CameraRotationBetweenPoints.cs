@@ -33,12 +33,10 @@ public class CameraRotationBetweenPoints : MonoBehaviour
             {
                 GoNext();
             }
-            else if(Input.GetKeyDown(KeyCode.LeftShift))
+            // NOT WORKİNG FIX
+            else if(Input.GetKey(KeyCode.LeftShift) & Input.GetKeyDown(KeyCode.Tab))
             {
-                if( Input.GetKeyDown(KeyCode.Tab) )
-                {
-                    GoPrevious();
-                }
+                GoPrevious();
             }
         }
     }

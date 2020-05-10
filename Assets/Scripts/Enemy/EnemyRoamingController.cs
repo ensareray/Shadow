@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+///<summary>
+/// Only Controls enemys raoiming between deteinated points.
+///</summary>
 public class EnemyRoamingController : MonoBehaviour
 {
     [SerializeField]Transform[] roamingPoints;
@@ -49,7 +52,6 @@ public class EnemyRoamingController : MonoBehaviour
     //atanmışsa direk git
     void Roam()
     {
-        Debug.Log("Roaming");
         isArrived = false;
         if(isDestineted == false)
         {
@@ -64,9 +66,15 @@ public class EnemyRoamingController : MonoBehaviour
     }
     IEnumerator WaitWhenPointReached()
     {
-        Debug.Log("Waiting S");
         yield return new WaitForSeconds(waitTimeWhenReachedToPoint);
-        Debug.Log("Waiting E");
         Roam();
+    }
+    public void EnemyStop()
+    {
+        navAgent.isStopped = true;
+    }
+    public void EnemyResume()
+    {
+        navAgent.isStopped = false;
     }
 }

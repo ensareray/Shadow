@@ -310,6 +310,7 @@ GameObject:
   - component: {fileID: 799198511}
   - component: {fileID: 799198515}
   - component: {fileID: 799198510}
+  - component: {fileID: 799198516}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -327,7 +328,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -432,6 +433,20 @@ MonoBehaviour:
   currentRoamingPoint: 0
   reachedDistance: 0.15
   waitTimeWhenReachedToPoint: 1
+--- !u!114 &799198516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799198509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6798a6a8fa3892e4e9094b86fff06a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sightDist: 10
+  hightMultiplier: 0.3
 --- !u!1 &1021480865
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,7 +471,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1021480865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.59, y: 0, z: 4.2}
+  m_LocalPosition: {x: -15.59, y: 0, z: -15.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 286550979}
