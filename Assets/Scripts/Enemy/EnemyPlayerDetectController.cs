@@ -26,6 +26,9 @@ public class EnemyPlayerDetectController : MonoBehaviour
         Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, transform.forward * sightDist, Color.green);
         Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward + transform.right).normalized * sightDist, Color.green);
         Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward - transform.right).normalized * sightDist, Color.green);
+        Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward + (transform.forward + transform.up).normalized).normalized * sightDist, Color.green);
+        Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward + (transform.forward - transform.up).normalized).normalized * sightDist, Color.green);
+        
         if( isDetected == false )
         {
             RaycastHit hit;
