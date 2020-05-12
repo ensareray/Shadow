@@ -11,6 +11,7 @@ public class EnemyPlayerDetectController : MonoBehaviour
     bool isDetected;
     [SerializeField] float sightDist, hightMultiplier, waitingTimeWhenContact;
     [SerializeField] EnemyRoamingController roamingController;
+    [SerializeField] float fieldOfWiewAngle;
 
     void Start()
     {
@@ -23,39 +24,21 @@ public class EnemyPlayerDetectController : MonoBehaviour
     }
     void SearchPlayer()
     {
-        Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, transform.forward * sightDist, Color.green);
-        Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward + transform.right).normalized * sightDist, Color.green);
-        Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward - transform.right).normalized * sightDist, Color.green);
-        Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward + (transform.forward + transform.up).normalized).normalized * sightDist, Color.green);
-        Debug.DrawRay(transform.position + Vector3.up * hightMultiplier, (transform.forward + (transform.forward - transform.up).normalized).normalized * sightDist, Color.green);
-        
-        if( isDetected == false )
-        {
+        Vector3 dir = target.position - transform.position;
+		float angle = Vector3.Angle(dir, transform.forward);
+		if(angle < fieldOfWiewAngle * 0.5f && isDetected == false)
+		{
             RaycastHit hit;
-            if (Physics.Raycast(transform.position + Vector3.up * hightMultiplier, transform.forward, out hit, sightDist))
+            if(Physics.Raycast(transform.position, dir, out hit, sightDist ))
             {
-                if (hit.transform.CompareTag("Player"))
+                if(hit.transform.CompareTag("Player"))
                 {
-                    Debug.Log("Player detected");
+                    //End Game - Player Dies
+                    Debug.DrawRay(transform.position, dir,Color.green);
+                    Debug.Log("I saw Him");
                     ISawPlayer();
                 }
-            }
-            if (Physics.Raycast(transform.position + Vector3.up * hightMultiplier, (transform.forward + transform.right).normalized, out hit, sightDist))
-            {
-                if (hit.transform.CompareTag("Player"))
-                {
-                    Debug.Log("Player detected");
-                    ISawPlayer();
-                }
-            }
-            if (Physics.Raycast(transform.position + Vector3.up * hightMultiplier, (transform.forward - transform.right).normalized, out hit, sightDist))
-            {
-                if (hit.transform.CompareTag("Player"))
-                {
-                    Debug.Log("Player detected");
-                    ISawPlayer();
-                }
-            }
+            }	
         }
     }
     void ISawPlayer()

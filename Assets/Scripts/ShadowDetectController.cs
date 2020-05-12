@@ -6,24 +6,30 @@ public class ShadowDetectController : MonoBehaviour
 {
 	[SerializeField] Transform target;
 	[SerializeField] uint rayDistance;
+	float fieldOfWiewAngle;
+	
+	void Start()
+	{
+		fieldOfWiewAngle = GetComponent<Light>().spotAngle;
+	}
 
 	//Oyuncu gölgede mi ışıkta mı onu anlamaya çalışıyoruz.
 	//Şu anda direk gövdeye bağlı ama kafaya yönelmeli.	
     void Update()
     {
 		Vector3 dir = target.position - transform.position;
-		RaycastHit hit;
-		if(Physics.Raycast(transform.position, dir, out hit, rayDistance ))
+		float angle = Vector3.Angle(dir, transform.forward);
+		if(angle < fieldOfWiewAngle * 0.5f)
 		{
-			if(hit.transform.CompareTag("Player"))
+			RaycastHit hit;
+			if(Physics.Raycast(transform.position, dir, out hit, rayDistance ))
 			{
-				//End Game - Player Dies
-				Debug.Log("I can see youu");
+				if(hit.transform.CompareTag("Player"))
+				{
+					//End Game - Player Dies
+					Debug.DrawRay(transform.position, dir,Color.red);
+				}
 			}
 		}
     }
-	void OnDrawGizmos()
-	{
-		Gizmos.DrawLine(transform.position,target.position);
-	}
 }
